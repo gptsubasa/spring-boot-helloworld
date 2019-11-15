@@ -1,0 +1,21 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello Fragment</title>
+    </head>
+    <body>
+        <h1>Hello Fragment</h1>
+        <div id="foo"
+             th:insert="fragment/embedded"></div>
+        <div id="foo"
+             th:insert="fragment/embedded :: fuga"></div>
+        <div id="bar"
+             th:replace="fragment/embedded :: hoge"></div>
+        
+        <!-- フラグメントにパラメータを渡す -->
+        <div th:insert="fragment/embedded :: hoge('HOGE', 'FUGA')"></div>
+
+
+    </body>
+</html>

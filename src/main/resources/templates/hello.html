@@ -1,0 +1,146 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hello Thymeleaf</title>
+    </head>
+    <body>
+        <h1>式の構文</h1>
+        <h2 th:text="${message}"></h2>
+        <!-- テキストの埋め込み -->
+        <h2 th:text="'hello world'"></h2>
+        <!-- インライン処理 th:text を使わずに直接テンプレート上に値を出力することができる -->
+        <h2>[['hello world!!']]</h2>
+        <!-- 変数の出力 -->
+        <h2>[[${modelValue}]]</h2>
+
+        <!-- 文字列 -->
+        <span th:text="'some text'"></span>
+        <!-- 数値 -->
+        <span th:text="123"></span>
+        <!-- 真偽値 -->
+        <span th:text="true"></span>
+        <!-- null -->
+        <span th:text="null"></span>
+        <!-- 文字連結 -->
+        <span th:text="'some text' + '!!'"></span>
+        <!-- リテラル置換 -->
+        <span th:text="|Hello ${message}|"></span>
+        <!-- 算術演算子 -->
+        <span th:text="(30 * 20 + 10 / 5 - 1) % 3"></span>
+        <!-- 論理演算子 -->
+        <span th:text="true
+                and false
+                or true
+                and not true
+                or !false"></span>
+        <!-- 比較と等価 -->
+        <span th:text="1 < 10"></span>
+        <span th:text="1 > 10"></span>
+        <span th:text="1 <= 10"></span>
+        <span th:text="1 >= 10"></span>
+        <span th:text="1 == 10"></span>
+        <span th:text="1 != 10"></span>
+        <!-- 条件演算子 -->
+        <!-- 1: <span th:text="true　? 'a'"></span><br> -->
+        2: <span th:text="false ? 'b'"></span><br>
+        3: <span th:text="true  ? 'c': 'C'"></span><br>
+        <!-- 4: <span th:text="true　?: 'd'"></span><br> -->
+        5: <span th:text="false ?: 'e'"></span><br> <!-- null 以外の場合は【オブジェクト】がそのまま評価される -->
+        6: <!-- span th:text="null　?: 'f'"></span><br--> <!-- 【オブジェクト】が null の場合に【値】が評価される-->
+
+        <h1>SpEL式</h1>
+        <div th:text="${hoge.publicField}"></div>
+        <div th:text="${hoge['publicField']}"></div>
+        <div th:text="${hoge.publicMethod()}"></div>
+        <div th:text="${hoge.publicValue}"></div>
+        <div th:text="${hoge['publicValue']}"></div>
+
+        <!-- Mapの参照 -->
+        <div th:text="${map.message}"></div>
+        <div th:text="${map['message']}"></div>
+
+        <!-- List の参照 -->
+        <div th:text="${list[0]}"></div>
+        <div th:text="${list[1]}"></div>
+        <div th:text="${list[2]}"></div>
+
+        <h1>属性に値を設定する</h1>
+        <span th:class="'hello' + 'world'">hoge</span>
+
+        <h1>リンクURL</h1>
+        <!-- コンテキストパスからの相対パス ※application.propertiesに定義 -->
+        <p><a th:href="@{/foo/bar}">[[@{/foo/bar}]]</a></p>
+        <p><a th:href="@{/foo/bar(hoge='HOGE', paramValue=${paramValue})}">[[@{/foo/bar(hoge='HOGE', paramValue=${paramValue})}]]</a></p>
+        <!-- パスに変数を埋め込む -->
+        <p><a th:href="@{/foo/{pathValue}/bar(pathValue=123)}">[[@{/foo/{pathValue}/bar(pathValue=123)}]]</a></p>
+        
+        <h1>暗黙的に参照できるオブジェクト</h1>
+        <p th:text="${#httpServletRequest}"></p>
+        <p th:text="${#httpSession}"></p>
+        <p th:text="${param}"></p>
+        <p th:text="${session}"></p>
+        <p th:text="${application}"></p>
+
+        <h1>オブジェクトの選択</h1>
+        <div th:object="${hoge}">
+            <div>name = [[*{name}]]</div>
+            <div>value = [[*{value}]]</div>
+        </div>
+
+        <h1>ローカル変数の宣言</h1>
+        <div th:with="message = 'Hello World!!'">
+            message = [[${message}]]
+        </div>
+
+        <h1>条件による表示・非表示の切り替え</h1>
+        <h2 th:if="${flag}">flag is true</h2>
+        <h2 th:if="${!flag}">flag is false</h2>
+
+        <h1>真・偽と評価される値</h1>
+        <ul>
+            <li th:if="${booleanTrue}">booleanTrue</li>
+            <li th:if="${booleanFalse}">booleanFalse</li>
+            <li th:if="${numericZero}">0</li>
+            <li th:if="${numericOne}">numericOne</li>
+            <li th:if="${charZero}">charZero</li>
+            <li th:if="${stringEmpty}">stringEmpty</li>
+            <li th:if="${stringZero}">stringZero</li>
+            <li th:if="${stringOff}">stringOff</li>
+            <li th:if="${stringNo}">stringNo</li>
+            <li th:if="${stringFalse}">stringFalse</li>
+            <li th:if="${anyObject}">anyObject</li>
+            <li th:if="${nullValue}">nullValue</li>
+        </ul>
+
+        <h1>繰り返し処理</h1>
+        <ul>
+            <li th:each="element : ${list}">[[${element}]]</li>
+        </ul>
+        <!-- Map の繰り返し -->
+        <ul>
+            <li th:each="entry : ${map2}">
+                key=[[${entry.key}]], value=[[${entry.value}]]
+            </li>
+        </ul>
+        <!-- 繰り返しのステータスの参照 -->
+        <ul>
+            <li th:each="element, status : ${list}">
+                index = [[${status.index}]],
+                count = [[${status.count}]],
+                size = [[${status.size}]],
+                current = [[${status.current}]],
+                even = [[${status.even}]],
+                odd = [[${status.odd}]],
+                first = [[${status.first}]],
+                last = [[${status.last}]]
+            </li>
+        </ul>
+
+        <h1>th:block</h1>
+        <!-- <th:block> タグは、レンダリング後からは完全に消去される -->
+        <th:block th:each="element : ${list}">
+            <h2>[[${element}]]</h2>
+        </th:block>
+    </body>
+</html>

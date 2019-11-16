@@ -143,7 +143,16 @@
             <h2>[[${element}]]</h2>
         </th:block>
 
-        <h1>フラグメントを埋め込む</h1>
+        <h1>メッセージリソース</h1>
+        <h2 th:text="#{foo.message}"></h2>
+        <h2 th:text="#{bar.message}"></h2>
+        <h2 th:text="#{baz.message('せかい')}"></h2>
+        <h2 th:text="#{baz.message('世界')}"></h2>
 
+        <h1>Springビーン</h1>
+        <h2 th:text="${@mySpringBean.hello()}"></h2>
+
+        <h1>Spring MVC との Form データの連携</h1>
+        
     </body>
 </html>

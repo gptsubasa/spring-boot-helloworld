@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Form Sample</title>
+    </head>
+    <body>
+        <form th:action="@{/form}" method="post" th:object="${myForm}">
+            <input type="text" th:field="*{value}" />
+            <label th:for="${#ids.next('checked')}">checked</label>
+            <input type="checkbox" th:field="*{checked}" />
+
+            <div th:each="radioButton : *{radioButtons()}">
+                <label th:for="${#ids.next('selectedValue')}" th:text="${radioButton.value}"></label>
+                <input type="radio" th:field="*{selectedValue}" th:value="${radioButton.key}" />
+            </div>
+
+            <!-- <select th:field="*{selectedValue}">
+                <option th:each="option : *{options()}"
+                        th:value="${option.key}"
+                        th:text="${option.value}">
+                </option>
+            </select> -->
+
+            <input type="submit" value="Submit" />
+        </form>
+    </body>
+</html>

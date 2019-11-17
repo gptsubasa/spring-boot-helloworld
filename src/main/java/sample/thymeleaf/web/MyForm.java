@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 public class MyForm {
     private String value;
     private boolean checked;
@@ -49,33 +52,55 @@ public class MyForm {
     }
 
     // 動的追加削除
-    private List<Row> rows = new ArrayList<>();
+    // private List<Row> rows = new ArrayList<>();
 
-    public void appendRow() {
-        this.rows.add(new Row());
+    // public void appendRow() {
+    //     this.rows.add(new Row());
+    // }
+
+    // public void removeRow(int index) {
+    //     this.rows.remove(index);
+    // }
+
+    // public List<Row> getRows() {
+    //     return rows;
+    // }
+
+    // public void setRows(List<Row> rows) {
+    //     this.rows = rows;
+    // }
+
+    // public static class Row {
+    //     private String value;
+
+    //     public String getValue() {
+    //         return value;
+    //     }
+
+    //     public void setValue(String value) {
+    //         this.value = value;
+    //     }
+    // }
+
+    // バリデーション
+    @Size(min=3)
+    private String text;
+    @Min(100)
+    private Integer number;
+
+    public String getText() {
+        return text;
     }
 
-    public void removeRow(int index) {
-        this.rows.remove(index);
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public List<Row> getRows() {
-        return rows;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setRows(List<Row> rows) {
-        this.rows = rows;
-    }
-
-    public static class Row {
-        private String value;
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

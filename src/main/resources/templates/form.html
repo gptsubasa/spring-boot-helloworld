@@ -6,14 +6,14 @@
     </head>
     <body>
         <form th:action="@{/form}" method="post" th:object="${myForm}">
-            <input type="text" th:field="*{value}" />
+            <!-- <input type="text" th:field="*{value}" />
             <label th:for="${#ids.next('checked')}">checked</label>
             <input type="checkbox" th:field="*{checked}" />
 
             <div th:each="radioButton : *{radioButtons()}">
                 <label th:for="${#ids.next('selectedValue')}" th:text="${radioButton.value}"></label>
                 <input type="radio" th:field="*{selectedValue}" th:value="${radioButton.key}" />
-            </div>
+            </div> -->
 
             <!-- <select th:field="*{selectedValue}">
                 <option th:each="option : *{options()}"
@@ -22,7 +22,8 @@
                 </option>
             </select> -->
  
-            <table border="1">
+            <!-- 動的追加削除 -->
+            <!-- <table border="1">
                 <tr>
                     <th>No</th>
                     <th>User input</th>
@@ -41,8 +42,21 @@
                 </tr>
             </table>
 
-            <input type="submit" name="appendRow" value="Append Row" />
-            <!-- <input type="submit" value="Submit" /> -->
+            <input type="submit" name="appendRow" value="Append Row" /> -->
+
+            <div>
+                <input type="text" th:field="*{text}" />
+                <ul th:each="error : ${#fields.errors('text')}">
+                    <li th:text="${error}"></li>
+                </ul>
+            </div>
+            <div>
+                <input type="text" th:field="*{number}" />
+                <ul th:each="error : ${#fields.errors('number')}">
+                    <li th:text="${error}"></li>
+                </ul>
+            </div>
+            <input type="submit" value="Submit" />
         </form>
     </body>
 </html>

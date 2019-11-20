@@ -9,6 +9,10 @@ import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+// 独自バリデータ
+import sample.thymeleaf.validation.MyValidation;
+
+@MyValidation
 public class MyForm {
     private String value;
     private boolean checked;
